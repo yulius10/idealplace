@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>
+            File Transfer Example
+        </title>
+        <script type="text/javascript" src="cordova.js">
+        </script>
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+        <script type="text/javascript" src="js/database.js">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <script type="text/javascript">
+            function getImage() {
+                navigator.camera.getPicture(uploadPhoto, function(message) {
+                    alert('get picture failed');
+                },{
+                    quality: 100,
+                    destinationType: navigator.camera.DestinationType.FILE_URI,
+                    sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+                });
+            }
+            function uploadPhoto(imageURI) {
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+                options.mimeType = "image/jpeg";
+                console.log(options.fileName);
+                var params = new Object();
+                params.value1 = "test";
+                params.value2 = "param";
+                options.params = params;
+                options.chunkedMode = false;
+                
+                
+                var ft = new FileTransfer();
+                ft.upload(imageURI, "http://160.153.224.25/idealplace/php/subirFotos.php", function(result){
+                    console.log(JSON.stringify(result));
+                    
+                    alert("La imagen subio exitosamente");
+                    var arregloURI=imageURI.split("/");
+                    var datosId=getCookie("idUsuario");
+                    archivoValidacion = "http://160.153.224.25/idealplace/php/actualizarURI.php?jsoncallback=?"
+                    $.getJSON( archivoValidacion, { id:datosId,ruta:arregloURI[arregloURI.length-1]})
+                        .done(function(respuestaServer) {
+                            if(respuestaServer.validacion == "ok"){
+                                /// si la validacion es correcta, muestra la pantalla "home"
+                                alert(respuestaServer.mensaje);
+                                location.href="inicio.html";
+                            }else{
+                                /// ejecutar una conducta cuando la validacion falla
+                                alert(respuestaServer.mensaje);
+                            }
+                        });
+                    return false;
+                    
+                }, function(error){
+                    console.log(JSON.stringify(error));
+                }, options);
+            }
+        </script>
+    </head>
+    <body>
+        <div data-role="page" id="home">
+            <div data-role="header">
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+                <button onclick="getImage()">
+                    Subir foto
+                </button>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h3>
+                    Derechos reservados 2016
+		</h3>
+            </div>
+	</div>
+    </body>
+</html>

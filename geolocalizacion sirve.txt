@@ -1,0 +1,1 @@
+http://blog.jorgeivanmeza.com/2010/10/georreferenciar-con-el-api-v3-de-google-maps-utilizando-javascript/

@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>
+            Login
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/estilos.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <script type="text/javascript" src="js/database.js">
+	</script>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+        <div data-role="page" id="inicio">
+            <div data-role="header">
+		<h1>
+                    Autenticacion de Usuario
+                </h1>
+            </div>
+            <div data-role="content">
+		<form id="formulario" data-ajax="false">
+                    <label>
+                        Usuario
+                    </label>
+                    <input type="text" id="nombredeusuario" name="nombredeusuario"/>
+                    <label>
+                        Password
+                    </label>
+                    <input type="password" id="clave" name="clave" />
+                    <input type="submit" value="Login" id="botonLogin" />
+    		</form>
+                <form action="registrarse.html" data-ajax="false">
+                    <input type="submit" name="registrarse" id="registrarse" value="Registrarse"/>
+                </form>
+            </div>
+            <div data-role="footer" data-theme="c" data-position="fixed">
+                <h3>
+                    Derechos reservados 2016
+                </h3>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#formulario').submit(function() {
+                // recolecta los valores que inserto el usuario
+                var datosUsuario = $("#nombredeusuario").val();
+                var datosPassword = $("#clave").val();
+                //archivoValidacion = "http://trebold.co/php/validacion_de_datos.php?jsoncallback=?"
+                archivoValidacion ="http://160.153.224.25/idealplace/php/validacion_de_datos.php?jsoncallback=?";
+                $.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
+                    .done(function(respuestaServer) {
+                        if(respuestaServer.validacion == "ok"){
+                            /// si la validacion es correcta, muestra la pantalla "home"
+                            var id=respuestaServer.id;
+                            var nombre=respuestaServer.nombre;
+                            var correo=respuestaServer.correo;
+                            var usuario=datosUsuario;
+                            setCookie("idUsuario", id, 300);
+                            setCookie("nombre", nombre, 300);
+                            setCookie("correo", correo, 300);
+                            setCookie("usuario", usuario, 300);
+                            location.href='inicio.html';
+                        }else{
+                            /// ejecutar una conducta cuando la validacion falla
+                            alert(respuestaServer.mensaje);
+                        }
+                    });
+                return false;
+            });
+        </script>
+    </body>
+</html>

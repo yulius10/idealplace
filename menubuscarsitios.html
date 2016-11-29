@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+    <head>
+	<title>
+            Buscar sitios
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/estilos.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+        <!--
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js">
+	</script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js">
+	</script>-->
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+	<div data-role="page" id="home">
+            <div data-role="header">
+		<a href="inicio.html" data-icon="back" rel="external">
+                    Regresar
+		</a>
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+		<!--<a data-role="button" data-icon="arrow-r" data-iconpos="right">
+                    Bogotá
+		</a>-->
+		<h1 id="titulo">
+                    Buscar Lugar ideal
+		</h1>
+                <!-- http://idealplace.cf/php/consultarsitios.php  action="./php/consultarsitios.php" -->
+                <form id="formulario">
+                    Busqueda:
+                    <a href="buscarsitiosEspecifica.html" data-icon="arrow-r" data-role="button" rel="external" data-iconpos="right">
+                        Especifica
+                    </a>
+                    <a href="buscarsitiosGeneral.html" data-icon="arrow-r" data-role="button" rel="external" data-iconpos="right">
+                        General
+                    </a>
+		</form>
+            </div>
+            <!-- Mostrar resultado de la consulta -->
+            <div id="mostrarDatos">
+                <ul data-role="listview" data-theme="a" id="listaDatos">
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li>
+                            <a href="buscarmapa.html" data-icon="info" data-role="button" rel="external">
+                                Buscar en mapa
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    Derechos reservados 2016
+		</h3>
+            </div>
+	</div>
+    </body>
+</html>

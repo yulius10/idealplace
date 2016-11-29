@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+    <head>
+        <title>
+            Publicar sitios
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/estilos.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+        <!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js">
+	</script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js">
+	</script>-->
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <script type="text/javascript" src="js/database.js">
+	</script>
+        <script type="text/javascript">
+            function consultar(){
+                // recolecta los valores que inserto el usuario
+                var datosItem="nada";
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarUbicaciones.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<option value='"+cliente.idUbicaciones+"'>"
+                                +cliente.Ubicaciones
+                            +"</option>";
+                            $(newRow).appendTo("#ubicacion");
+                        });
+                    });
+                    return false;
+            }
+            function consultarA(){
+                // recolecta los valores que inserto el usuario
+                var datosItem="nada";
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarTipoLugar.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<option value='"+cliente.idTipoLugar+"'>"
+                                +cliente.tipoLugar
+                            +"</option>";
+                            $(newRow).appendTo("#buscar");
+                        });
+                    });
+                    return false;
+            }
+            function consultarB(){
+                // recolecta los valores que inserto el usuario
+                var datosItem="nada";
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarTipoNegocio.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<option value='"+cliente.idTipoNegocio+"'>"
+                                +cliente.tipoNegocio
+                            +"</option>";
+                            $(newRow).appendTo("#que");
+                        });
+                    });
+                    return false;
+            }
+            function consultarC(){
+                // recolecta los valores que inserto el usuario
+                var datosItem="nada";
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarLocalidad.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<option value='"+cliente.idlocalidad+"'>"
+                                +cliente.Localidad
+                            +"</option>";
+                            $(newRow).appendTo("#localidad");
+                        });
+                    });
+                    return false;
+            }
+        </script>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+	<div data-role="page" id="home">
+            <div data-role="header">
+                <a href="inicio.html" data-icon="back" rel="external">
+                    Regresar
+		</a>
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+            	<h1 id="titulo">
+                    Ingresar Datos del Lugar
+		</h1>
+                <script type="text/javascript">
+                    consultar();
+                    consultarA();
+                    consultarB();
+                    consultarC();
+                </script>
+                <form id="formulario" data-ajax="false">
+                    <div data-role="fieldcontain">
+			Ubicación:
+                        <select name="ubicacion" id="ubicacion" required>
+                            <option>
+                            </option>
+			</select>
+                    </div>
+                    <div data-role="fieldcontain">
+			Estrato:
+                        <input type="number" name="estrato" id="estrato" min="0" max="7" required/>
+                    </div>
+                    <div data-role="fieldcontain">
+			Ingresar tipo de lugar:
+                        <select name="buscar" id="buscar" required>
+                            <option>
+                            </option>
+			</select>
+                    </div>
+                    <div data-role="fieldcontain">
+			¿Qué quieres hacer con él?:
+                        <select name="que" id="que" required>
+                            <option>
+                            </option>
+			</select>
+                    </div>
+                    <div data-role="fieldcontain">
+                        Número de habitaciones:
+                        <input type="number" name="habitaciones" min="0" id="habitaciones" required/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        Número de baños:
+                        <input type="number" name="banos" min="0" id="banos" required/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        Cocina:
+                        <select name="cocina" id="cocina" required>
+                            <option>
+                            </option>
+                            <option value="si">
+                                Si
+                            </option>
+                            <option value="no">
+                                No
+                            </option>
+                        </select>
+                    </div>
+                    <div data-role="fieldcontain">
+                        Garaje o parqueadero incluido:
+                        <select name="garaje" id="garaje" required>
+                            <option>
+                            </option>
+                            <option value="si">
+                                Si
+                            </option>
+                            <option value="no">
+                                No
+                            </option>
+                        </select>
+                    </div>
+                    <div data-role="fieldcontain">
+                        Metros cuadrados:
+                        <input type="number" name="metrosCuadrados" id="metrosCuadrados" min="0" required/><img src="./imagenes/m.jpg" width="25" height="25" title="metros cuadrados" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        Localidad:
+                        <small>
+                            (Si es dentro de bogota)
+                        </small>
+                        <select name="localidad" id="localidad">
+                            <option>
+                            </option>
+                        </select>
+                    </div>
+                    <div data-role="fieldcontain">
+                        Si es arrendamiento:
+                        <ol>
+                            <li>
+                                Tiene acceso a internet:
+                                <select name="internet" id="internet" required>
+                                    <option>
+                                    </option>
+                                    <option value="si">
+                                        Si
+                                    </option>
+                                    <option value="no">
+                                        No
+                                    </option>
+                                </select>
+                            </li>
+                            <li>
+                                Incluye servicios con el pago del arrendamiento:
+                                <select name="servicios" id="servicios" required>
+                                    <option>
+                                    </option>
+                                    <option value="si">
+                                        Si
+                                    </option>
+                                    <option value="no">
+                                        No
+                                    </option>
+                                </select>
+                            </li>
+                        </ol>
+                    </div>
+                    <div data-role="fieldcontain">
+			Valor:
+                        <input type="number" name="valor" min="0" id="valor" required/> Pesos
+                    </div>
+                    <div data-role="fieldcontain">
+			Dirección:
+                        <input type="text" name="direccion" id="direccion" required/>
+                    </div>
+                    <center>
+                        <input type="submit" name="registrar" id="registrar" value="Registrar" />
+                    </center>
+		</form>
+                <center>
+                    <small>
+                        El correo registrado le llegara un un codigo para adjuntar las fotos de la propiedad mediante la pagina la pagina oficial de idealPlace.
+                    </small>
+                </center>
+            </div>
+            <div data-role="footer" data-position="fixed">
+		<h3>
+                    Derechos reservados 2016
+		</h3>
+            </div>
+	</div>
+        <script type="text/javascript">
+            $('#formulario').submit(function() {
+                var datosId=getCookie("idUsuario");
+                var datosUbicacion = $("#ubicacion").val();
+                var datosEstrato= $("#estrato").val();
+                var datosBuscar= $("#buscar").val();
+                var datosQue= $("#que").val();
+                var datosHabitaciones= $("#habitaciones").val();
+                var datosBanos= $("#banos").val();
+                var Cocina= $("#cocina").val();
+                var datosCocina= "";
+                if(Cocina=="si"){
+                    datosCocina="Si tiene";
+                }
+                else{
+                    datosCocina="No tiene";
+                }
+                var datosGaraje="";
+                var garaje= $("#garaje").val();
+                if(garaje=="si"){
+                    datosGaraje="Si tiene";
+                }
+                else{
+                    datosGaraje="No tiene";
+                }
+                var datosMetros= $("#metrosCuadrados").val();
+                var datosLocalidad="";
+                if(datosUbicacion=="1" || datosUbicacion==1){
+                    datosLocalidad= $("#localidad").val();
+                }
+                else{
+                    datosLocalidad="1";
+                }
+                //Arrendarlo
+                var datosInternet;
+                var datosServicios;
+                if(datosQue=="2" || datosQue==2){
+                    var Internet= $("#internet").val();
+                    var Servicios= $("#servicios").val();
+                    if(Internet=="si"){
+                        datosInternet="Si tiene";
+                    }
+                    else{
+                        datosInternet="No tiene";
+                    }
+                    if(Servicios=="si"){
+                        datosServicios="Si tiene";
+                    }
+                    else{
+                        datosServicios="No tiene";
+                    }
+                }
+                else{
+                    datosInternet= "No aplica";
+                    datosServicios= "No aplica";
+                }
+                var datosValor= $("#valor").val();
+                var datosDireccion= $("#direccion").val();
+                archivoValidacion = "http://160.153.224.25/idealplace/php/guardarsitios.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, { id:datosId,ubicacion:datosUbicacion,estrato:datosEstrato,buscar:datosBuscar,que:datosQue,habitaciones:datosHabitaciones,banos:datosBanos,cocina:datosCocina,garaje:datosGaraje,metrosCuadrados:datosMetros,localidad:datosLocalidad,internet:datosInternet,servicios:datosServicios,valor:datosValor,direccion:datosDireccion})
+                    .done(function(respuestaServer) {
+                        if(respuestaServer.validacion == "ok"){
+                            /// si la validacion es correcta, muestra la pantalla "home"
+                            alert(respuestaServer.mensaje);
+                            location.href="guardarFoto.html";
+                        }else{
+                            /// ejecutar una conducta cuando la validacion falla
+                            alert(respuestaServer.mensaje);
+                        }
+                    });
+                return false;
+            });
+        </script>
+    </body>
+</html>

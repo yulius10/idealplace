@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+    <head>
+	<title>
+            Eliminar
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/estilos.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+        <!--
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js">
+	</script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js">
+	</script>
+        -->
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <script type="text/javascript" src="js/database.js">
+	</script>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+	<div data-role="page" id="inicio">
+            <div data-role="header">
+                <a href="inicio.html" data-icon="back" data-theme="a" rel="external">
+                    Regresar
+		</a>
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+                <!-- http://www.idealplace.cf/php/eliminar.php  -->
+            	<form id="formulario" data-ajax="false">
+                    <div data-role="fieldcontain">
+			<label for="nombre">
+                            Codigo de propiedad:
+			</label>
+                        <input type="number" name="codigo" min="0" id="codigo" required />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label>
+                            Razon de porque elimina propiedad:
+                        </label>
+                        <select name="razon" id="razon" required>
+                            <option>
+                            </option>
+                            <option value="Vendido">
+                                Ya se vendio la propiedad
+                            </option>
+                            <option value="Arrendado">
+                                Ya se arrendo la propiedad
+                            </option>
+                            <option value="Otro motivo">
+                                Otro motivo
+                            </option>
+                        </select>
+                    </div>
+                    <div data-role="fieldcontain">
+			<input type="submit" name="eliminar" value="Eliminar" />
+                    </div>
+		</form>
+            </div>
+            <div data-role="footer" data-position="fixed">
+		<h3>
+                    Derechos reservados 2016
+		</h3>
+            </div>
+	</div>
+        <script type="text/javascript" >
+            $('#formulario').submit(function() {
+                // recolecta los valores que inserto el usuario
+                var datosId=getCookie("idUsuario");
+                var datosCodigo = $("#codigo").val();
+                var datosRazon = $("#razon").val();
+                archivoValidacion = "http://160.153.224.25/idealplace/php/eliminar_previo.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {id:datosId, codigo:datosCodigo ,razon:datosRazon})
+                    .done(function(respuestaServer) {
+                        if(respuestaServer.validacion == "ok"){
+                            /// si la validacion es correcta, muestra la pantalla "home"
+                            alert(respuestaServer.mensaje);
+                            location.href="inicio.html";
+                        }else{
+                            /// ejecutar una conducta cuando la validacion falla
+                            alert(respuestaServer.mensaje);
+                        }
+                    });
+                return false;
+            });
+        </script>
+    </body>
+</html>

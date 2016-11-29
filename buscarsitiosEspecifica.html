@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+    <head>
+	<title>
+            Buscar sitios
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/estilos.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+        <!--
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js">
+	</script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js">
+	</script>-->
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <script type="text/javascript">
+            function consultar(){
+                // recolecta los valores que inserto el usuario
+                var datosItem="nada";
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarUbicaciones.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<option value='"+cliente.idUbicaciones+"'>"
+                                +cliente.Ubicaciones
+                            +"</option>";
+                            $(newRow).appendTo("#ubicacion");
+                        });
+                    });
+                    return false;
+            }
+            function consultarA(){
+                // recolecta los valores que inserto el usuario
+                var datosItem="nada";
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarTipoLugar.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<option value='"+cliente.idTipoLugar+"'>"
+                                +cliente.tipoLugar
+                            +"</option>";
+                            $(newRow).appendTo("#buscar");
+                        });
+                    });
+                    return false;
+            }
+            function consultarB(){
+                // recolecta los valores que inserto el usuario
+                var datosItem="nada";
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarTipoNegocio.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<option value='"+cliente.idTipoNegocio+"'>"
+                                +cliente.tipoNegocio
+                            +"</option>";
+                            $(newRow).appendTo("#que");
+                        });
+                    });
+                    return false;
+            }
+        </script>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+	<div data-role="page" id="home">
+            <div data-role="header">
+		<a href="menubuscarsitios.html" data-icon="back" rel="external">
+                    Regresar
+		</a>
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+		<!--<a data-role="button" data-icon="arrow-r" data-iconpos="right">
+                    Bogotá
+		</a>-->
+		<h1 id="titulo">
+                    Buscar Lugar ideal
+		</h1>
+                <script type="text/javascript">
+                    consultar();
+                    consultarA();
+                    consultarB();
+                </script>
+                <!-- http://idealplace.cf/php/consultarsitios.php  action="./php/consultarsitios.php" -->
+                <form id="formulario">
+                    <div data-role="fieldcontain">
+			Ubicación:
+			<select name="ubicacion" id="ubicacion" required>
+                            <option>
+                            </option>
+			</select>
+                    </div>
+                    <div data-role="fieldcontain">
+			Estrato:
+			<input type="number" name="estrato" id="estrato" min="0" max="7" required/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        Ingresar tipo de lugar:
+			<select name="buscar" id="buscar" required>
+                            <option>
+                            </option>
+			</select>
+                    </div>
+                    <div data-role="fieldcontain">
+			Tipo de negocio:
+			<select name="que" id="que" required>
+                            <option>
+                            </option>
+			</select>
+                    </div>
+                    <input type="submit" name="buscarlugar" value="Buscar" id="buscarlugar"/>
+		</form>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h3>
+                    Derechos reservados 2016
+		</h3>
+            </div>
+        </div>
+        <div data-role="page" id="resultado">
+            <div data-role="header">
+		<a href="buscarsitiosEspecifica.html" data-icon="back" rel="external">
+                    Regresar
+		</a>
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+                <!-- Mostrar resultado de la consulta -->
+                <div id="mostrarDatos">
+                    <ul data-role="listview" data-inset="true" id="listaDatos">
+                    </ul>
+                </div>
+                <div data-role="footer" data-position="fixed">
+                    <h3>
+                        Derechos reservados 2016
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#formulario').submit(function() {
+                // recolecta los valores que inserto el usuario
+                var datosUbicacion = $("#ubicacion").val();
+                var datosEstrato = $("#estrato").val();
+                var datosBuscar = $("#buscar").val();
+                var datosQue = $("#que").val();
+                
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarsitiosEspecifico.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {ubicacion:datosUbicacion ,estrato:datosEstrato,buscar:datosBuscar,que:datosQue})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            location.href="buscarsitiosEspecifica.html#resultado";
+                            var newRow ="<li>"
+                                    +"<div id='avatarUs'><img src='"+cliente.foto+"' width='150' heigth='150' title='imagen del predio'/></div>"
+                                    +"Ubicacion: "+cliente.ubicacion+"<br/>"
+                                    +"Direccion: "+cliente.direccion+"<br/>"
+                                    +"Tipo de negocio:"+cliente.que+"<br/>"
+                                    +"Tipo de lugar:"+cliente.tipo+"<br/>"
+                                    +"Valor:"+cliente.valor+"<br/>"
+                                    +"<a href='buscarSitioEspecificoItem.html?item="+cliente.item+"' rel='external'>Más informacion</a><hr/></li>";
+                            $(newRow).appendTo("#listaDatos");
+                        });
+                        /*
+                        if(respuestaServer.validacion == "ok"){
+                            /// si la validacion es correcta, muestra la pantalla "home"
+                            alert(respuestaServer.mensaje);
+                            alert(respuestaServer1.ubicacion);
+                            //$.mobile.changePage("#home");
+                        }else{
+                            /// ejecutar una conducta cuando la validacion falla
+                            alert(respuestaServer.mensaje);
+                        }*/
+                    });
+                return false;
+            });
+        </script>
+    </body>
+</html>

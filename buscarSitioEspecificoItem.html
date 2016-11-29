@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>
+            Buscar
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/estilos.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+        <!--
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js">
+	</script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js">
+	</script>-->
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <script type="text/javascript" src="js/eje.js">
+	</script>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <script type="text/javascript">
+            function consultar(){
+                // recolecta los valores que inserto el usuario
+                var datosItem =buscar();
+                archivoValidacion = "http://160.153.224.25/idealplace/php/consultarsitiosEspecificoItem.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {item:datosItem})
+                    .done(function(respuestaServer) {
+                        $.each(respuestaServer, function(i,cliente){
+                            var newRow ="<li>"
+                                +"<div id='avatarUs'><img src='"+cliente.foto+"' width='150' heigth='150' /></div><br/>"
+                                +"<b>Ubicacion:</b> "+cliente.ubicacion+"<br/>"
+                                +"<b>Estrato:</b> "+cliente.estrato+"<br/>"
+                                +"<b>Tipo de predio:</b> "+cliente.tipoLugar+"<br/>"
+                                +"<b>Se:</b> "+cliente.tipoNegocio+"<br/>"
+                                +"<b>Numero de habitaciones:</b> "+cliente.habitaciones+"<br/>"
+                                +"<b>Numero de baños:</b> "+cliente.banos+"<br/>"
+                                +"<b>Cocina:</b>"+cliente.cocina+"<br/>"
+                                +"<b>Garaje:</b> "+cliente.garaje+"<br/>"
+                                +"<b>Metros cuadrados:</b> "+cliente.metros+"<br/>"
+                                +"<b>Localidad:</b> "+cliente.localidad+"<br/>"
+                                +"<b>Acceso a internet:</b> "+cliente.internet+"<br/>"
+                                +"<b>Servicios incluidos:</b> "+cliente.servicios+"<br/>"
+                                +"<b>Valor:</b> "+cliente.valor+"<br/>"
+                                +"<b>direccion:</b> "+cliente.direccion+"<br/>"
+                                +"<b>Persona de Contacto:</b> "+cliente.persona+"<br/>"
+                                +"<b>Celular:</b> "+cliente.celular+"<br/>"
+                                +"<b>Correo:</b> "+cliente.correo+"<br/>"
+                            +"</li>";
+                            $(newRow).appendTo("#listaDatos");
+                        });
+                    });
+                    return false;
+                }
+            </script>
+    </head>
+    <body>
+        <div data-role="page" id="mostrar">
+            <div data-role="header">
+		<a href="buscarsitiosEspecifica.html" data-icon="back" rel="external">
+                    Regresar
+		</a>
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+		<!--<a data-role="button" data-icon="arrow-r" data-iconpos="right">
+                    Bogotá
+		</a>-->
+		<h1 id="titulo">
+                    Buscar Lugar ideal
+		</h1>
+            </div>
+            <!-- Mostrar resultado de la consulta -->
+            <div id="mostrarDatos">
+                <ul data-role="listview" data-inset="true" id="listaDatos">
+                </ul>
+            </div>
+            <script>
+                consultar();
+            </script>
+            <div data-role="footer" data-position="fixed">
+                <h3>
+                    Derechos reservados 2016
+		</h3>
+            </div>
+        </div>
+    </body>
+</html>

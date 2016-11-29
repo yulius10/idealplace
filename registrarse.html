@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>
+            Login
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/estilos.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8;" />
+        <link rel= "stylesheet" href="css/jquery.mobile-1.4.5.css" type="text/css"/>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script type="text/javascript" src="js/jquery.mobile-1.4.5.js">
+	</script>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+        <div data-role="page" id="inicio">
+            <div data-role="header">
+		<a href="login.html" data-icon="back" rel="external">
+                    Regresar
+		</a>
+		<h1>
+                    Ideal place
+		</h1>
+            </div>
+            <div data-role="content">
+                <form id="formulario" data-ajax="false">
+                    Nombre:
+                    <input type="text" name="nombre" id="nombre" required/>
+                    <br/>
+                    Apellido:
+                    <input type="text" name="apellido" id="apellido" required/>
+                    <br/>
+                    Celular:
+                    <input type="tel" name="celular" id="celular" required/>
+                    <br/>
+                    Usuario:
+                    <input type="text" name="usuario" id="usuario" required/>
+                    <br/>
+                    Contraseña:
+                    <input type="password" name="contra" id="contra" required/>
+                    <br/>
+                    Correo:
+                    <input type="email" name="correo" id="correo" required/>
+                    <input type="submit" name="registrarse" id="registrarse" value="Registrarse"/>
+                </form>
+            </div>
+            <div data-role="footer" data-theme="c" data-position="fixed">
+                <h3>
+                    Derechos reservados 2016
+                </h3>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#formulario').submit(function() {
+                // recolecta los valores que inserto el usuario
+                var nombre = $("#nombre").val();
+                var apellido = $("#apellido").val();
+                var celular = $("#celular").val();
+                var datosUsuario = $("#usuario").val();
+                var datosPassword = $("#contra").val();
+                var correo = $("#correo").val();
+                archivoValidacion = "http://160.153.224.25/idealplace/php/registrar.php?jsoncallback=?"
+                $.getJSON( archivoValidacion, {nombre:nombre,apellido:apellido, usuario:datosUsuario ,password:datosPassword, correo:correo,celular:celular})
+                    .done(function(respuestaServer) {
+                        if(respuestaServer.validacion == "ok"){
+                            /// si la validacion es correcta, muestra la pantalla "home"
+                            alert(respuestaServer.mensaje);
+                            location.href="login.html";
+                        }else{
+                            /// ejecutar una conducta cuando la validacion falla
+                            alert(respuestaServer.mensaje);
+                        }
+                    });
+                return false;
+            });
+        </script>
+    </body>
+</html>
